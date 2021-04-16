@@ -1,0 +1,53 @@
+一.协程的写法与启动
+	1.协程的内容
+		IEnumerator 【协程名】()
+    		{
+        		for (int i = 0; i < count; i++)
+        		{
+				//每次运行到此处等待1s
+            			yield return new WaitForSeconds(1);
+        		}
+    		}
+	2.协程的启动
+		StartCoroutine(【协程名】());
+二.实例化
+	Instantiate(【GameObject名】, 【生成位置】, 【生成角度】);
+		实例化的对象既可以是预制体也可以是当前场景已存在的物体
+		实例化后物体的名称为【原名称+(Clone)】
+
+//挂载在欲生成敌人的位置上的物体
+实例：
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
+public class Game_Manager : MonoBehaviour
+{
+
+    	public int count = 10;	//敌人的生成量
+    	public float enemySpeed = 100f;	//敌人的移动速度
+    	public GameObject enemy;	//定义一个GameObject类型的变量，用于获取敌人的预制体
+    	public List<GameObject> enemyList = new List<GameObject>();	//生成一个用于存放敌人游戏项目的泛型集合并实例化
+
+    	void Start()
+    	{
+		//启动线程【Enemy_Generate】
+        	StartCoroutine(Enemy_Generate());
+    	}
+
+    	IEnumerator Enemy_Generate()
+    	{
+        	for (int i = 0; i < count; i++)
+        	{
+            		GameObject current_enemy = Instantiate(enemy, transform.position, Quaternion.identity) as GameObject;	//将enemy在脚本挂载物体的位置上以旋转角（0,0,0）生成并赋值给【current_enemy】
+            		currenteEnemy.AddComponent<Enemy_Control>();	//给当前生成的enemy添加脚本【Enemy_Control】
+            		enemyList.Add(current_enemy);	//将当前生成的enemy假如泛型集合【enemyList】
+			yield return new WaitForSeconds(1);	//等待一秒
+        	}
+    	}
+
+    	void Update()
+    	{
+
+    	}
+}

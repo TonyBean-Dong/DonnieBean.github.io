@@ -1,0 +1,57 @@
+一.通过改变坐标移动
+	一个GameObjet的Transform共有三个属性：position（位置），rotation（旋转），scale（大小），改变坐标就是改变GameObject的position属性
+	1.直接变更坐标
+		//将此脚本所挂载的GameObject移动至世界坐标(0,1,0)
+		tranform.position=new Vector3(0,1,0);
+		或者
+		//将【GameObject】移动至世界坐标(0,1,0)
+		【GameObject】.tranform.position=new Vector3(0,1,0);（【GameObject】需事先定义并赋值）
+	2.以当前坐标为基准改变
+		//将此脚本所挂载的GameObject向自己的y轴正方向移动一个单位
+		tranform.tranlate(new vector3(0,1,0))
+	3.position与localposition
+		position是以世界坐标为参照物的坐标，localpositon是以父物体为参照物的坐标，当一个物体没有父物体时，两者相同
+		例：A的世界坐标为(0,5,0),B的世界坐标为(0,10,0),将B拖进A中,此时B的Tranform面板显示的position就是localposition,为(0,5,0)
+			假如此时挂载在B的脚本有
+			void Start()
+			{
+				tranform.localposition=new vector3(0,0,0);
+			}
+			一运行B就会和A重叠
+二.通过赋予速度和力移动
+	刚体组件：
+		mass：物体的质量
+		drag：物体收到的空气阻力
+		Use Gravity：物体是否有重力
+		Constraints：
+			Freeze Position：冻结坐标
+			Freeze Rotation：冻结旋转角
+			冻结后无法通过脚本改变被冻结的量，但是可能会因为外界的冲击改变
+		（其他几个我也不知道有什么用）
+		只有赋予了刚体组件，物体才会有重量，游戏过程中才可能被动的移动（如，被撞动）
+	1.赋予物体的刚体速度
+		//赋予脚本所挂载的GameObject的Rigidbody一个方向为世界坐标y轴大小为1000单位的速度
+		transform.GetComponent<Rigidbody>().velocity = new Vector3(0, 1000, 0);
+		//每秒赋予脚本所挂载的GameObject的Rigidbody一个方向为自己y轴正方向大小为1000的速度
+		void Update()
+		{
+			transform.GetComponent<Rigidbody>().velocity = transform.up*Time.deltaTime*1000;
+		}
+	2.赋予物体的刚体力
+		//赋予脚本所挂载的GameObject的Rigidbody一个方向为世界坐标y轴大小为1000单位的力
+		transform.GetComponent<Rigidbody>().AddForce(0, 1000, 0);
+		//每秒赋予脚本所挂载的GameObject的Rigidbody一个方向为自己z轴正方向大小为1000的力
+		void Update()
+		{
+			transform.GetComponent<Rigidbody>().AddForce(transform.forward*Time.deltaTime*1000);
+		}
+三.物体的旋转
+	1.直接变更旋转角
+		//将将此脚本所挂载的GameObject的旋转角变更为(45,45,45)
+		transform.rotation = Quaternion.Euler(new Vector3(45, 45, 45));
+	2.以当前旋转角为基准改变
+		//每秒钟脚本所挂载的GameObject的旋转x轴顺时针旋转15度，y轴逆时针旋转30度，z轴顺时针旋转45度
+		void Update()
+		{
+			transform.Rotate(new Vector3(15, -30, 45)*Time.deltaTime);
+		}
