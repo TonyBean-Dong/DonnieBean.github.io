@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Unity WebGL Player | WebTest</title>
+		<link rel="shortcut icon" href="TemplateData/favicon.ico">
+		<link rel="stylesheet" href="TemplateData/style.css">
+		<script src="TemplateData/UnityProgress.js"></script>  
+		<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+		<script src="Build/UnityLoader.js"></script>
+		<script>
+			var gameInstance = UnityLoader.instantiate("gameContainer", "Build/Lab.json", {onProgress: UnityProgress});
+			
+			function Reset()
+			{
+				var canvas = document.getElementById("#canvas");
+				canvas.height=  document.documentElement.clientHeight;
+				canvas.width =  document.documentElement.clientWidth;
+			}
+			
+			var isDown = true;//记录鼠标状态
+			var isMove=true;
+			var move_div ;//要操作的div对象
+			
+			function createWindow()
+			{
+				 isDown = true;
+				 isMove = true;
+				
+				var cont0 = document.createElement('div');
+				cont0.id='movediv'; cont0.style.position = 'absolute'; 
+				cont0.style.height = '100px';cont0.style.width = '100px'; 
+				cont0.style.background = 'aqua'; cont0.style.zIndex = '9998'; 
+				cont0.innerHTML ="返回";
+				cont0.onselectstart = function(){return false;};   
+				cont0.style.textAlign='center';cont0.style.lineHeight='100px';
+				
+				var first = document.body.firstChild; 
+				document.body.insertBefore(cont0, first); 
+				
+				move_div=document.getElementById('movediv');
+				cont0.addEventListener('mousedown',down,false);
+				cont0.addEventListener('mouseup',up,false);
+				document.addEventListener('mousemove',move,false);
+				document.addEventListener('mouseleave',up,false);
+				
+				up();
+			}
+					
+			function down()
+			{
+				isDown = true;
+				isMove=false;
+				
+				$("iframe").each(function() {
+        　　 $("<div class='ui-resizable-iframeFix' style='background: #fff;'></div>")
+            .css({
+            width: this.offsetWidth+"px", height: this.offsetHeight+"px",
+            position: "absolute", opacity: "0.001", zIndex: 1000
+            })
+            .css($(this).offset())
+            .appendTo("body");
+        });
+
+			}
+			
+			function move()
+			{
+				isMove=true;
+				
+				if(isDown)
+				{
+					//获取新div坐标，鼠标实时坐标 - 鼠标与div的偏移量
+					
+					
+					var width = document.documentElement.clientWidth;
+					var height = document.documentElement.clientHeight;
+					var rect=move_div.getBoundingClientRect();
+					
+					ndx = event.pageX-rect.width/2;
+					ndy = event.pageY-rect.height/2;
+					
+					if(event.pageX<0||width-event.pageX<0||event.pageY<0||height-event.pageY<0)
+					{
+						up();
+					}
+					
+					if(ndx<0)
+					{
+						ndx=0;
+					}
+					if(ndx>width-rect.width)
+					{
+						ndx=width-rect.width;
+					}
+					if(ndy<0)
+					{
+						ndy=0;
+					}
+					if(ndy>height-rect.height)
+					{
+						ndy=height-rect.height;
+					}
+					
+					//把新div坐标值赋给div对象
+					move_div.style.left = ndx+"px";
+					move_div.style.top = ndy+"px";
+				}
+			}
+			
+			function up()
+			{
+				if(isDown==true)
+				{
+					if(isMove==false)
+					{
+						move_div.remove() ;
+					}
+					else
+					{
+						
+						$("div.ui-resizable-iframeFix").each(function() {
+					this.parentNode.removeChild(this);
+				});
+
+						var width = document.documentElement.clientWidth;
+						var height = document.documentElement.clientHeight;
+						var rect=move_div.getBoundingClientRect();
+						
+						if(rect.top<=rect.top&&rect.top<=height-rect.bottom&&rect.top<=rect.left&&rect.top<=width-rect.right)
+						{
+							move_div.style.top = "0px";
+							move_div.style.bottom = "auto";
+						}
+						if(height-rect.bottom<=rect.top&&height-rect.bottom<=height-rect.bottom&&height-rect.bottom<=rect.left&&height-rect.bottom<=width-rect.right)
+						{
+							move_div.style.top = "auto";
+							move_div.style.bottom = "0px";
+						}
+						if(rect.left<=rect.top&&rect.left<=height-rect.bottom&&rect.left<=rect.left&&rect.left<=width-rect.right)
+						{
+							move_div.style.left = "0px";
+							move_div.style.right = "auto";
+						}
+						if(width-rect.right<=rect.top&&width-rect.right<=height-rect.bottom&&width-rect.right<=rect.left&&width-rect.right<=width-rect.right)
+						{
+							move_div.style.left="auto";
+							move_div.style.right = "0px";
+						}
+						
+					}
+					isDown = false;
+					isMove=false;
+				}
+			}
+			
+		</script> 
+		<style type="text/css">
+			.web-container 
+			{
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				bottom: 0px;
+				left: 0px;
+				display: none;
+				background-color: white;
+			}
+
+            .web-container > iframe 
+			{
+                width: 100%;
+                height: 100%;
+            }
+			
+		</style>
+	</head>
+	<body  onresize="Reset()" ,scroll= no, style="overflow:hidden">
+	    <div class="webgl-content">
+			<div id="gameContainer" style="width: 100%; height: 100%;margin:auto">
+			</div>
+			<div class="web-container"id="mydiv">
+				<iframe id="myframe" src="https://www.baidu.com"></iframe>
+			</div>   
+	   </div>
+	</body>
+</html>

@@ -1,0 +1,1 @@
+通过更改Project Settings > Physics > Contacts Pair Mode可以使得运动学刚体能够正常触发碰撞监听方法，但当运动学刚体的物体上有非凸面网格碰撞器时，碰撞会卡死

@@ -1,0 +1,16 @@
+.sun {
+  left:357px;
+  top:357px;
+  height: 1px;
+  width: 1px;
+  background-color: rgb(248,107,35); 
+  border-radius: 50%;
+  position: absolute;
+  animation: zoom 4s  infinite linear alternate;
+}
+
+@keyframes zoom {
+  100% {
+    transform: scale(150,150);
+  }
+}

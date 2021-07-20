@@ -1,0 +1,30 @@
+
+封装
+public（公有的）
+private（私有的，类的内部使用）
+protected（受保护的，只能继承使用）
+intemal（项目内的）
+sealed（密封的，不能被继承）
+
+
+public virtual void Say()
+{
+
+}
+
+public override void say()
+{
+
+}
+
+整理符
+#region somethingName
+/*
+    something
+*/
+#endregion
+
+on destroty
+
+remove.listening
+

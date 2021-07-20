@@ -1,0 +1,50 @@
+创建数据库：
+create database test;
+create database [数据库名];
+使用指定数据库：
+use test；
+use [数据库名];
+创建表：
+create table t1(id char(20) not null primary key,name char(30));
+create table [表名]([属性1名] [属性1类型] [属性1约束],[属性2名] [属性2类型]); 
+增加属性：
+alter table t1 add age int not null,add money double;
+alter table [表名] add [属性1名] [属性1类型] [属性1约束],add [属性2名] [属性2类型];
+修改属性约束：
+alter table t1 modify name char(30) not null;
+alter table [表名] modify [属性名] [属性类型] [属性约束];
+插入数据：
+insert into t1(id,name,age)values(2330160206,'董礼斌',18),(2330160207,'mlh',250),(2330160200,'bakemono',0);
+insert into [表名]([属性1名],[属性2名],[属性3名])values([属性1数据],[属性2数据],[属性3数据]),([属性1数据],[属性2数据],[属性3数据]),([属性1数据],[属性2数据],[属性3数据]);
+修改数据：
+update t1 set money=0 where name='mlh';
+update [表名] set [需要修改的属性名]=[修改之后的值] where [用于查询的属性名]=[用与查询的值];
+显示表结构
+describe t1;
+describe [表名];
+删除属性：
+alter table t1 drop column money;
+alter table [表名] drop column [属性名];
+查询表：
+select * from t1;
+select * from [表名];
+限制条件查询表：
+select * from t1  where age<20;
+select * from [表名] where [限制条件];
+限制条件查询表指定列：
+select id,name from t1 where age<20;
+select [属性1名],[属性2名] from [表名] where [限制条件];
+
+    SQL语句使用时间和日期的函数
+
+
+getdate():获取系统当前时间
+dateadd(datepart, number, date):计算在一个时间的基础上增加一个时间后的新时间值,比如：dateadd(yy, 30, getdate())
+datediff(datepart, startdate, enddate):计算两个时间的差值,比如：datediff(yy, getdate(), '2008-08-08')
+dataname(datepart, date):获取时间不同部分的值，返回值为字符串
+datepart(datepart, date):和datename相似，只是返回值为整型
+day(date):获取指定时间的天数
+month(date):获取指定时间的月份
+year(date):获取指定时间的年份
+
+select year(getdate()) ：当前年份
