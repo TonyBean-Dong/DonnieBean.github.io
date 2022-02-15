@@ -43,16 +43,16 @@ public class RuntimeEditorLabComponentDescriptor : ComponentDescriptorBase<Runti
 
 * 首先打开RTEditor的编辑器配置  
 
-![开启脚本配置](开启脚本配置.png)  
+![开启脚本配置.png](https://s2.loli.net/2022/02/11/dYNVxavrotsMC4P.png)  
 
 * 随后在ScriptEditors分类中找到并选择自定义脚本，右侧的GameObject没有特殊需求时选择Battlehub\RTEditor\Content\Runtime\RTEditor\Prefabs\Editors\ComponentEditor.prefab即可。
 
-![找到并选择自定义脚本](找到并选择自定义脚本.png)
+![找到并选择自定义脚本.png](https://s2.loli.net/2022/02/11/ju9cFbTpnihNkWf.png)
 
 * 随后点击Save Editors Map按钮保存配置即可。  
 此时就可以添加刚才编写的自定义脚本并编辑序列化字段了。
 
-![此时可以添加刚才编写的自定义脚本并编辑序列化字段](此时可以添加刚才编写的自定义脚本并编辑序列化字段.png)  
+![此时可以添加刚才编写的自定义脚本并编辑序列化字段.png](https://s2.loli.net/2022/02/11/W9POsS6pq7HJgzj.png)  
 
 * 但此时若保存RTEditor中的场景然后再加载，会发现添加的自定义脚本并不会保存，这是因为RTEditor不会在保存场景时对新增的自定义脚本进行序列化保存，需要在SaveLoad中进行配置。
 
@@ -60,11 +60,11 @@ public class RuntimeEditorLabComponentDescriptor : ComponentDescriptorBase<Runti
 
 * 首先需要开启Runtiem SaveLoad的持久存储类配置
 
-![配置持久存储类](配置持久存储类.png)  
+![配置持久存储类.png](https://s2.loli.net/2022/02/11/ItEiz8wlQFPjCNd.png)  
 
 * 找到并勾选自定义脚本及其想要持久存储的字段
 
-![找到并勾选自定义脚本及其想要持久存储的字段](找到并勾选自定义脚本及其想要持久存储的字段.png)  
+![找到并勾选自定义脚本及其想要持久存储的字段.png](https://s2.loli.net/2022/02/11/fBSgIMVKp65eAPX.png)  
 
 * 随后点击BuildAll完成配置即可。  
 之后在RTEditor保存场景时，就可以保存编写的自定义脚本了。  
